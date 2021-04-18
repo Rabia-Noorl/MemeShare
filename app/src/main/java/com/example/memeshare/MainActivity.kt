@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.ProgressBar
 import com.android.volley.Request
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         loadMeme()
     }
     private fun loadMeme()
@@ -37,10 +39,9 @@ class MainActivity : AppCompatActivity() {
 
         val jsonObjectRequestRequest = JsonObjectRequest(Request.Method.GET, curnetImageURL, null,
             { response ->
-                val url = response.getString("url")
-                val memeImageView = findViewById<ImageView>(R.id.memeImageView)
+                curnetImageURL = response.getString("url")
 
-                Glide.with(this).load(url).listener(object: RequestListener<Drawable>{
+                Glide.with(this).load(curnetImageURL).listener(object: RequestListener<Drawable>{
 
                     override fun onLoadFailed(
                         e: GlideException?,
@@ -77,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_TEXT, "Hey, Checkout this great meme downloaded for Raddit$curnetImageURL")
+        intent.putExtra(Intent.EXTRA_TEXT, "Hey, Checkout this great meme downloaded for Raddit $curnetImageURL")
         val chooser = Intent.createChooser(intent, "Share meme via ...")
         startActivity(chooser)
 

@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">MemeShare</string>
+    <string name="app_name">Meme Share</string>
+    <string name="well_come_to_meme_share">Well Come to Meme Share</string>
+    <string name="well_come_to_meme_share_splash">Well Come to Meme Share</string>
 </resources>
